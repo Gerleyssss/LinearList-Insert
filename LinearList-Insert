@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define MaxSize 50
+typedef int ElemType;
+
+//静态分配
+typedef struct {
+	ElemType data[MaxSize];
+	int length;
+}SqList;
+
+#define InitSize 100
+
+//动态分配
+typedef struct {
+	ElemType* data;
+	int capacity;
+	int length;
+}SeqList;
+
+bool ListInsert(SqList& L, int i, ElemType e)
+{
+	if (i<1 || i>L.length + 1)//判断插入位置是否合法
+	{
+		return false;
+	}
+	if (L.length > MaxSize)//判断顺序表空间是否足够
+	{
+		return false;
+	}
+	for (int j = L.length; j >= i; j--)
+	{
+		L.data[j] = L.data[j - 1];
+	}
+	L.data[i - 1] = e;
+	L.length += 1;
+	return true;
+
+}
+
+void PrintList(SqList& L)
+{
+	for (int i = 0; i <= L.length-1; i++)
+	{
+		printf("%4d",L.data[i]);
+	}
+	printf("\n");
+}
+
+int main()
+{
+	SqList L;//顺序表
+	bool ret;//查看返回true还是false
+	
+	L.data[0] = 1;
+	L.data[1] = 3;
+	L.data[2] = 2;
+	L.length = 3;
+	ret = ListInsert(L, 3, 75);
+	if (ret == true)
+	{
+		printf("插入成功");
+		PrintList(L);
+	}
+	else {
+		printf("插入失败");
+	}
+	return 0;
+}
